@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table('settings', function (Blueprint $table) {
+
+            // Tambahkan hanya jika belum ada
+            if (!Schema::hasColumn('settings', 'footer_deskripsi')) {
+                $table->text('footer_deskripsi')->nullable()->after('whatsapp');
+            }
+
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table('settings', function (Blueprint $table) {
+
+            if (Schema::hasColumn('settings', 'footer_deskripsi')) {
+                $table->dropColumn('footer_deskripsi');
+            }
+
+        });
+    }
+};
